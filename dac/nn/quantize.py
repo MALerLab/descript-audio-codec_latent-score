@@ -197,7 +197,7 @@ class ResidualVectorQuantize(nn.Module):
 
         return z_q, codes, latents, commitment_loss, codebook_loss
 
-    def from_codes(self, codes: torch.Tensor):
+    def from_codes(self, codes: torch.Tensor, n_quantizers: int = None):
         """Given the quantized codes, reconstruct the continuous representation
         Parameters
         ----------
@@ -211,6 +211,8 @@ class ResidualVectorQuantize(nn.Module):
         z_q = 0.0
         z_p = []
         n_codebooks = codes.shape[1]
+        if n_quantizers is not None and n_quantizers < n_codebooks:
+            n_codebooks = n_quantizers
         for i in range(n_codebooks):
             z_p_i = self.quantizers[i].decode_code(codes[:, i, :])
             z_p.append(z_p_i)
@@ -218,7 +220,7 @@ class ResidualVectorQuantize(nn.Module):
             z_q_i = self.quantizers[i].out_proj(z_p_i)
             z_q = z_q + z_q_i
         return z_q, torch.cat(z_p, dim=1), codes
-
+    
     def from_latents(self, latents: torch.Tensor):
         """Given the unquantized latents, reconstruct the
         continuous representation after quantization.

@@ -237,6 +237,7 @@ class CodecMixin:
         self,
         obj: Union[str, Path, DACFile],
         verbose: bool = False,
+        n_quantizers: int = None,
     ) -> AudioSignal:
         """Reconstruct audio from a given .dac file
 
@@ -267,7 +268,7 @@ class CodecMixin:
 
         for i in range_fn(0, codes.shape[-1], chunk_length):
             c = codes[..., i : i + chunk_length].to(self.device)
-            z = self.quantizer.from_codes(c)[0]
+            z = self.quantizer.from_codes(c, n_quantizers)[0]
             r = self.decode(z)
             recons.append(r.to(original_device))
 
