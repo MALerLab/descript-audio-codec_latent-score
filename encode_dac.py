@@ -1,8 +1,8 @@
 import os
 import dac
-import torch
 from tqdm import tqdm
 from audiotools import AudioSignal
+from pathlib import Path
 
 # Function to find all wav files in a directory and its subdirectories
 def find_wav_files(directory):
@@ -26,9 +26,11 @@ def encode_wav_files(wav_files, model, stereo=True):
             x = model.compress(signal)
 
             if stereo == True:
-                dac_file_path = wav_file.replace('.wav', '_stereo.dac')
+                dac_file_path = wav_file.replace('.wav', '.dac').replace('audio_segments', 'audio_tokens_stereo')
             else:
-                dac_file_path = wav_file.replace('.wav', '_mono.dac')
+                dac_file_path = wav_file.replace('.wav', '.dac').replace('audio_segments', 'audio_tokens_mono')
+            
+            Path(dac_file_path).parent.mkdir(parents=True, exist_ok=True)
 
             x.save(dac_file_path)
 
@@ -50,5 +52,5 @@ def main(directory):
     encode_wav_files(wav_files, model, stereo=False)
 
 if __name__ == "__main__":
-    directory = "/home/jongmin/userdata/latent_score/string_quartet_dataset"  # Set your directory path here
+    directory = str(Path.home() / "userdata/latent_score_dataset/string_quartet/split")  # Set your directory path here
     main(directory)
