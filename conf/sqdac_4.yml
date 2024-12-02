@@ -1,0 +1,17 @@
+$include:
+  - conf/base.yml
+  - conf/1gpu.yml
+
+DAC.n_codebooks: 4
+
+train/build_dataset.folders:
+  music_hq:
+    - /home/jongmin/userdata/latent_score/string_quartet_audio_dataset/train
+
+val/build_dataset.folders:
+  music_hq:
+    - /home/jongmin/userdata/latent_score/string_quartet_audio_dataset/validation
+
+test/build_dataset.folders:
+  music_hq:
+    - /home/jongmin/userdata/latent_score/string_quartet_audio_dataset/test

@@ -47,7 +47,7 @@ def main(directory):
     wav_files = find_wav_files(directory)
     
     # Encode and save each wav file
-    encode_wav_files(wav_files, model, stereo=False)
+    encode_wav_files(wav_files, model, stereo=True)
 
 if __name__ == "__main__":
     directory = "/home/jongmin/userdata/latent_score/string_quartet_dataset"  # Set your directory path here

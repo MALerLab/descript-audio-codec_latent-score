@@ -83,15 +83,3 @@ test/AudioDataset.n_examples: 1000
 
 AudioLoader.shuffle: true
 AudioDataset.without_replacement: true
-
-train/build_dataset.folders:
-  music_hq:
-    - /home/jongmin/userdata/latent_score/string_quartet_dataset/train
-
-val/build_dataset.folders:
-  music_hq:
-    - /home/jongmin/userdata/latent_score/string_quartet_dataset/validation
-
-test/build_dataset.folders:
-  music_hq:
-    - /home/jongmin/userdata/latent_score/string_quartet_dataset/test
